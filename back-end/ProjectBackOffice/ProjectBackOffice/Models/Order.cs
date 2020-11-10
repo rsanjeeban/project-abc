@@ -1,15 +1,18 @@
+using ProjectBackOffice.Models;
 using System;
 
 namespace ProjectBackOffice
 {
-    public class WeatherForecast
+    public class Order
     {
-        public DateTime Date { get; set; }
-
-        public int TemperatureC { get; set; }
-
-        public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-
-        public string Summary { get; set; }
+        public string CompetenceLevel { get; set; }
+        public Person ContactPerson { get; set; }
+        public Orderer ContactPersonOrderer { get; set; }
+        public string DatetimeFrom { get; set; }
+        public string DatetimeTo { get; set; }
+        public bool IsPhoneAssignment { get; set; }
+        public string OrderNumber { get; set; }
+        public OrderStatus OrderStatus { get; set; }
     }
+
 }

@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "p7LUSsPtuztAN8+Ib0wdTtaNpydEBWHBKtRZ5n5cKbBNyvXeif62Di8yVVuWb5lPuVJfPrTAMtU286S60cMvnA==",
+  "dgSpecHash": "hiC9eTHkMycwTPGzjWbuYJC2VdEvRyYnrKDWmu45yI8W5xo0h+1mTgNCeqsDuMuOJo1bToweXiCvd4xcLaXkow==",
   "success": true,
   "projectFilePath": "D:\\SpeedCodeLabs\\ReactJs\\ABC Company\\back-office\\back-end\\ProjectBackOffice\\ProjectBackOffice\\ProjectBackOffice.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\Genesis\\.nuget\\packages\\newtonsoft.json\\12.0.3\\newtonsoft.json.12.0.3.nupkg.sha512"
+  ],
   "logs": []
 }

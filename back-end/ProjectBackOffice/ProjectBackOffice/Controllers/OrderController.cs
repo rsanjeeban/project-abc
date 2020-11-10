@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
+using ProjectBackOffice.Models;
 
 namespace ProjectBackOffice.Controllers
 {
@@ -11,29 +14,24 @@ namespace ProjectBackOffice.Controllers
     [Route("[controller]")]
     public class OrderController : ControllerBase
     {
-        private static readonly string[] Summaries = new[]
-        {
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };
-
-        private readonly ILogger<OrderController> _logger;
-
-        public OrderController(ILogger<OrderController> logger)
-        {
-            _logger = logger;
-        }
+        
 
         [HttpGet]
         public IEnumerable<Order> Get()
         {
-            var rng = new Random();
-            return Enumerable.Range(1, 5).Select(index => new Order
-            {
-                Date = DateTime.Now.AddDays(index),
-                TemperatureC = rng.Next(-20, 55),
-                Summary = Summaries[rng.Next(Summaries.Length)]
-            })
-            .ToArray();
+            var webclient = new WebClient();
+            var json = webclient.DownloadString("./Data/OrderData.json");
+            var orders = JsonConvert.DeserializeObject<List<Order>>(json);
+            return orders;
+        }
+
+        [HttpGet("/home")]
+        public IEnumerable<Order> Gett()
+        {
+            var webclient = new WebClient();
+            var json = webclient.DownloadString("./Data/OrderData.json");
+            var orders = JsonConvert.DeserializeObject<List<Order>>(json);
+            return orders;
         }
     }
 }
