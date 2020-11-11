@@ -21,6 +21,7 @@ import {
 import likelySubtags from "cldr-core/supplemental/likelySubtags.json";
 import currencyData from "cldr-core/supplemental/currencyData.json";
 import weekData from "cldr-core/supplemental/weekData.json";
+import { filterBy } from "@progress/kendo-data-query";
 
 import numbers from "cldr-numbers-full/main/es/numbers.json";
 import currencies from "cldr-numbers-full/main/es/currencies.json";
@@ -48,36 +49,18 @@ loadMessages(esMessages, "es-ES");
 const DATE_FORMAT = "yyyy-mm-dd hh:mm:ss.SSS";
 const intl = new IntlService();
 
-orders.forEach((o) => {
-  o.orderDate = intl.parseDate(o.orderDate, DATE_FORMAT);
-  o.shippedDate =
-    o.shippedDate === "NULL"
-      ? undefined
-      : intl.parseDate(o.shippedDate, DATE_FORMAT);
-});
+// orders.forEach((o) => {
+//   o.orderDate = intl.parseDate(o.orderDate, DATE_FORMAT);
+//   o.shippedDate =
+//     o.shippedDate === "NULL"
+//       ? undefined
+//       : intl.parseDate(o.shippedDate, DATE_FORMAT);
+// });
 
 class DetailComponent extends GridDetailRow {
   render() {
     const dataItem = this.props.dataItem;
-    return (
-      <div>
-        <section style={{ width: "200px", float: "left" }}>
-          <p>
-            <strong>Street:</strong> {dataItem.shipAddress.street}
-          </p>
-          <p>
-            <strong>City:</strong> {dataItem.shipAddress.city}
-          </p>
-          <p>
-            <strong>Country:</strong> {dataItem.shipAddress.country}
-          </p>
-          <p>
-            <strong>Postal Code:</strong> {dataItem.shipAddress.postalCode}
-          </p>
-        </section>
-        <Grid style={{ width: "500px" }} data={dataItem.details}></Grid>
-      </div>
-    );
+    return <div></div>;
   }
 }
 
@@ -100,6 +83,7 @@ class Table extends React.Component {
       sort: [{ field: "orderDate", dir: "desc" }],
       group: [{ field: "customerID" }],
     };
+    debugger;
     this.state = {
       dataResult: process(orders, dataState),
       dataState: dataState,
@@ -115,13 +99,21 @@ class Table extends React.Component {
   };
 
   expandChange = (event) => {
-    const isExpanded =
-      event.dataItem.expanded === undefined
-        ? event.dataItem.aggregates
-        : event.dataItem.expanded;
-    event.dataItem.expanded = !isExpanded;
+    // const isExpanded =
+    //   event.dataItem.expanded === undefined
+    //     ? event.dataItem.aggregates
+    //     : event.dataItem.expanded;
+    // event.dataItem.expanded = !isExpanded;
 
     this.setState({ ...this.state });
+    this.props.setExpandStatus(true);
+  };
+
+  state = {
+    filter: {
+      logic: "and",
+      filters: [{ field: "ProductName", operator: "contains", value: "Chef" }],
+    },
   };
 
   _pdfExport;
@@ -149,26 +141,22 @@ class Table extends React.Component {
                 style={{ height: "700px" }}
                 sortable
                 filterable
-                groupable
                 reorderable
                 pageable={{ buttonCount: 4, pageSizes: true }}
-                data={this.state.dataResult}
+                data={filterBy(this.props.data, this.state.filter)}
                 {...this.state.dataState}
                 onDataStateChange={this.dataStateChange}
                 detail={DetailComponent}
-                expandField="expanded"
+                expandField="false"
                 onExpandChange={this.expandChange}
+                filter={this.state.filter}
+                onFilterChange={(e) => {
+                  this.setState({
+                    filter: e.filter,
+                  });
+                }}
               >
                 <GridToolbar>
-                  Locale:&nbsp;&nbsp;&nbsp;
-                  <DropDownList
-                    value={this.state.currentLocale}
-                    textField="language"
-                    onChange={(e) => {
-                      this.setState({ currentLocale: e.target.value });
-                    }}
-                    data={this.locales}
-                  />
                   &nbsp;&nbsp;&nbsp;
                   <button
                     title="Export to Excel"
@@ -185,28 +173,37 @@ class Table extends React.Component {
                     Export to PDF
                   </button>
                 </GridToolbar>
-                <GridColumn field="customerID" width="200px" />
                 <GridColumn
-                  field="orderDate"
+                  field="orderStatus"
+                  filter="numeric"
+                  width="200px"
+                  filterable
+                />
+                <GridColumn filterable field="orderNumber" width="300px" />
+                <GridColumn
+                  filterable
+                  field="contactPerson.contactPersonName"
+                  title="Contact Person"
+                  width="280px"
+                />
+                <GridColumn
+                  filterable
+                  field="contactPersonOrderer.contactPersonOrdererName"
+                  title="Orderer"
+                  width="280px"
+                />
+                <GridColumn
+                  filterable
+                  field="datetimeFrom"
+                  filter="date"
+                  width="200px"
+                />
+                <GridColumn
+                  filterable
+                  field="datetimeTo"
                   filter="date"
                   format="{0:D}"
                   width="300px"
-                />
-                <GridColumn field="shipName" width="280px" />
-                <GridColumn field="freight" filter="numeric" width="200px" />
-                <GridColumn
-                  field="shippedDate"
-                  filter="date"
-                  format="{0:D}"
-                  width="300px"
-                />
-                <GridColumn field="employeeID" filter="numeric" width="200px" />
-                <GridColumn
-                  locked
-                  field="orderID"
-                  filterable={false}
-                  title="ID"
-                  width="90px"
                 />
               </Grid>
             </ExcelExport>
@@ -218,37 +215,24 @@ class Table extends React.Component {
             >
               {
                 <Grid
-                  data={process(orders, {
+                  data={process(this.props.data, {
                     skip: this.state.dataState.skip,
                     take: this.state.dataState.take,
                   })}
                 >
-                  <GridColumn field="customerID" width="200px" />
+                  <GridColumn field="orderStatus" width="200px" />
+                  <GridColumn field="orderNumber" width="300px" />
+                  <GridColumn field="orderNumber" width="280px" />
                   <GridColumn
-                    field="orderDate"
+                    field="datetimeFrom"
                     filter="date"
-                    format="{0:D}"
-                    width="300px"
-                  />
-                  <GridColumn field="shipName" width="280px" />
-                  <GridColumn field="freight" filter="numeric" width="200px" />
-                  <GridColumn
-                    field="shippedDate"
-                    filter="date"
-                    format="{0:D}"
-                    width="300px"
-                  />
-                  <GridColumn
-                    field="employeeID"
-                    filter="numeric"
                     width="200px"
                   />
                   <GridColumn
-                    locked
-                    field="orderID"
-                    filterable={false}
-                    title="ID"
-                    width="90px"
+                    field="datetimeTo"
+                    filter="date"
+                    format="{0:D}"
+                    width="300px"
                   />
                 </Grid>
               }
