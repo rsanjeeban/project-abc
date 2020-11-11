@@ -2,7 +2,7 @@ import { Component } from "react";
 
 class Home extends Component {
   render() {
-    return <div>Welcome to Back-Office</div>;
+    return <div className="welcomeMsg">Welcome to Back-Office</div>;
   }
 }
 

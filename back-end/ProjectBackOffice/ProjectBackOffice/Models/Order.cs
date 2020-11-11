@@ -12,7 +12,7 @@ namespace ProjectBackOffice
         public string DatetimeTo { get; set; }
         public bool IsPhoneAssignment { get; set; }
         public string OrderNumber { get; set; }
-        public OrderStatus OrderStatus { get; set; }
+        public string OrderStatus { get; set; }
     }
 
 }

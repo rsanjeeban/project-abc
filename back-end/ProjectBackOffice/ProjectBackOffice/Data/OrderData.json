@@ -5,7 +5,7 @@
       "ContactPersonFirstName": "kiru",
       "ContactPersonLastName": "kirujan",
       "ContactPersonName": "Hari kirujan",
-      "ContactPersonTitle": null
+      "ContactPersonTitle": "Mr"
     },
     "ContactPersonOrderer": {
       "ContactPersonOrdererFirstName": "kiru",
@@ -185,7 +185,7 @@
     "DatetimeTo": "2020-04-07 14:50:00",
     "IsPhoneAssignment": false,
     "OrderNumber": "AA0456",
-    "OrderStatus": "submitted"
+    "OrderStatus": "accepted"
   },
 
   {
@@ -206,6 +206,6 @@
     "DatetimeTo": "2020-04-07 14:50:00",
     "IsPhoneAssignment": false,
     "OrderNumber": "AA0456",
-    "OrderStatus": "submitted"
+    "OrderStatus": "accepted"
   }
 ]

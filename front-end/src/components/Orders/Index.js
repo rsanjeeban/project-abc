@@ -21,7 +21,7 @@ class Orders extends Component {
 
   render() {
     return (
-      <div>
+      <div className="order_area">
         <Table
           setExpandStatus={this.setExpandStatus}
           data={this.props.orders}

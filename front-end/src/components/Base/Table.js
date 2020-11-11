@@ -1,5 +1,6 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
+import { connect } from "react-redux";
 import {
   Grid,
   GridColumn,
@@ -9,7 +10,7 @@ import {
 import { DropDownList } from "@progress/kendo-react-dropdowns";
 import { GridPDFExport } from "@progress/kendo-react-pdf";
 import { ExcelExport } from "@progress/kendo-react-excel-export";
-
+import orderStatusFilterCell from "../Base/orderStatusFilterCell";
 import {
   IntlProvider,
   load,
@@ -64,6 +65,12 @@ class DetailComponent extends GridDetailRow {
   }
 }
 
+const orderStatusList = ["submitted", "accepted", "processing", "cancelled"];
+
+const orderStatusFilter = orderStatusFilterCell(
+  orderStatusList,
+  "Select category"
+);
 class Table extends React.Component {
   locales = [
     {
@@ -106,13 +113,14 @@ class Table extends React.Component {
     // event.dataItem.expanded = !isExpanded;
 
     this.setState({ ...this.state });
+    this.props.setDrawerData(event.dataItem);
     this.props.setExpandStatus(true);
   };
 
   state = {
     filter: {
       logic: "and",
-      filters: [{ field: "ProductName", operator: "contains", value: "Chef" }],
+      filters: [{ field: "ProductName", operator: "contains", value: "" }],
     },
   };
 
@@ -176,34 +184,32 @@ class Table extends React.Component {
                 <GridColumn
                   field="orderStatus"
                   filter="numeric"
-                  width="200px"
                   filterable
+                  filterCell={orderStatusFilter}
                 />
-                <GridColumn filterable field="orderNumber" width="300px" />
+                <GridColumn filterable field="orderNumber" />
                 <GridColumn
                   filterable
                   field="contactPerson.contactPersonName"
                   title="Contact Person"
-                  width="280px"
                 />
                 <GridColumn
                   filterable
                   field="contactPersonOrderer.contactPersonOrdererName"
                   title="Orderer"
-                  width="280px"
                 />
                 <GridColumn
                   filterable
                   field="datetimeFrom"
+                  title="From"
                   filter="date"
-                  width="200px"
                 />
                 <GridColumn
                   filterable
                   field="datetimeTo"
+                  title="To"
                   filter="date"
                   format="{0:D}"
-                  width="300px"
                 />
               </Grid>
             </ExcelExport>
@@ -211,7 +217,7 @@ class Table extends React.Component {
               ref={(element) => {
                 this._pdfExport = element;
               }}
-              margin="1cm"
+              margin="5cm"
             >
               {
                 <Grid
@@ -244,4 +250,12 @@ class Table extends React.Component {
   }
 }
 
-export default Table;
+const mapActionsToProps = (dispatch) => {
+  return {
+    setDrawerData: (data) => {
+      dispatch({ type: "order/SetDrawerOrderData", data: data });
+    },
+  };
+};
+
+export default connect(null, mapActionsToProps)(Table);

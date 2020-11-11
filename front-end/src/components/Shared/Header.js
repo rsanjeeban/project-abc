@@ -3,20 +3,21 @@ import * as ReactDOM from "react-dom";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 
-import { CHANGE_SIDEBAR_STATUS } from "../../store/actions/index";
-
+// KendoReact components
 import {
   AppBar,
   AppBarSection,
   AppBarSpacer,
   Avatar,
 } from "@progress/kendo-react-layout";
-import { Badge, BadgeContainer } from "@progress/kendo-react-indicators";
-import store from "../../store/index";
-import UserIcon from "../Base/User";
 
-let kendokaAvatar =
-  "https://www.telerik.com/kendo-react-ui-develop/images/kendoka-react.png";
+import { Badge, BadgeContainer } from "@progress/kendo-react-indicators";
+
+// store
+import store from "../../store/index";
+import { CHANGE_SIDEBAR_STATUS } from "../../store/actions/index";
+// Components
+import UserIcon from "../Base/User";
 
 class Header extends React.Component {
   menuBtnClick = () => {
@@ -51,9 +52,6 @@ class Header extends React.Component {
                 <span>
                   <Link to="/orders">Orders</Link>
                 </span>
-              </li>
-              <li>
-                <span>Contacts</span>
               </li>
             </ul>
           </AppBarSection>

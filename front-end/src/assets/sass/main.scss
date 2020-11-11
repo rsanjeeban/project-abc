@@ -1,0 +1,51 @@
+body {
+    margin: 0px !important;
+}
+
+.welcomeMsg {
+    margin-top: 5px;
+    padding: 10px;
+    margin-left: 20px;
+    height: 35px;
+    background-color: white;
+    text-align: left;
+    font-size: 22px;
+    font-weight: 1000;
+}
+
+.order_area {
+    margin: 10px;
+    padding: 25px;
+}
+
+.orderData {
+    text-align: left;
+    width: 100%;
+
+    .order_label {
+        padding-left: 8px;
+        width: 100%;
+        font-weight: 800;
+        margin-top: 5px;
+        background-color: #d1e9ff;
+        color: black;
+    }
+
+    .order_value {
+        padding-left: 8px;
+        background-color: white;
+        color: black;
+    }
+}
+
+
+// Css Overwrite
+.k-button.k-primary {
+    border-color: #2196F3 !important;
+    background-color: #2196F3 !important;
+    padding: 6px 50px !important;
+
+    &:active {
+        background-color: #2196F3;
+    }
+}

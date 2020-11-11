@@ -25,13 +25,6 @@ namespace ProjectBackOffice.Controllers
             return orders;
         }
 
-        [HttpGet("/home")]
-        public IEnumerable<Order> Gett()
-        {
-            var webclient = new WebClient();
-            var json = webclient.DownloadString("./Data/OrderData.json");
-            var orders = JsonConvert.DeserializeObject<List<Order>>(json);
-            return orders;
-        }
+        
     }
 }
