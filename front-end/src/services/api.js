@@ -14,6 +14,7 @@ const instance = axios.create({
 // Add a request interceptor
 instance.interceptors.request.use(
   function (config) {
+    // Token will be placed in this area
     // config.headers.common["Authorization"] = "Bearer ";
     config.headers.common["Access-Control-Allow-Origin"] = "*";
     config.headers.common["Accept"] = "application/json";

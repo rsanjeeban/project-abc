@@ -44,24 +44,6 @@ const Sidebar = (props) => {
       <Drawer {...properties}>
         <DrawerContent>
           <Orders />
-          {/* <div className="k-form">
-            <div className="k-form-field">
-              <button className="k-button" onClick={handleClick}>
-                Toggle the Drawer state
-              </button>
-            </div>
-            <div className="k-form-field">
-              <label htmlFor={"switchPosition"}>
-                Switch Drawer position&nbsp;
-              </label>
-              
-            </div>
-            <div className="k-form-field">
-              <p>
-                
-              </p>
-            </div>
-          </div> */}
         </DrawerContent>
       </Drawer>
       <style>

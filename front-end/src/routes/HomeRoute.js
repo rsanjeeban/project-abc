@@ -1,8 +1,9 @@
+// Router
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
+// Components
 import Dashboard from "../components/Dashboard";
 import NotFound from "../components/NotFound";
-import Orders from "../components/Orders/Index";
 
 var HomeRoute = function () {
   return (
